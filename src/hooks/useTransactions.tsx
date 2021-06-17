@@ -19,6 +19,7 @@ interface TransactionsProviderProps {
 interface TransactionsContextData {
   transactions: Transaction[];
   createTransaction: (transaction: TransactionInput) => Promise<void>;
+  removeTransaction: (id: number) => Promise<void>;
 }
 
 const TransactionsContext = createContext<TransactionsContextData>(
@@ -36,15 +37,29 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   async function createTransaction(transactionInput: TransactionInput){
     const response = await api.post('/transactions', transactionInput);
     const { transaction } = response.data;
-
-    setTransactions([
+    const newTransactions = [
       ...transactions
       , transaction
-    ]);
+    ];
+
+    setTransactions(newTransactions);
+    saveTransactionsDb(newTransactions);
+  }
+
+  async function removeTransaction(id: number){
+    await api.delete(`/transactions/${id}`);
+    const newTransactions = transactions.filter(el => el.id !== id);
+
+    setTransactions(newTransactions);
+    saveTransactionsDb(newTransactions);
+  }
+
+  function saveTransactionsDb(transactions: Transaction[]){
+    localStorage.setItem('@dtmoney:transactions', JSON.stringify(transactions));
   }
 
   return (
-    <TransactionsContext.Provider value={{transactions, createTransaction}}>
+    <TransactionsContext.Provider value={{transactions, createTransaction, removeTransaction}}>
       {children}
     </TransactionsContext.Provider>
   );

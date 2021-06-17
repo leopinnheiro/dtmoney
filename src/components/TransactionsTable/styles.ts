@@ -34,6 +34,29 @@ export const Container = styled.div`
       &.withdraw {
         color: var(--red);
       }
+
+      &.amount {
+        word-break: break-all;
+        max-width: 290px;
+      }
     }
+  }
+`;
+
+export const Actions = styled.td`
+  button {
+    display: flex;
+    border: 0;
+    color: var(--red);
+    background: transparent;
+    margin-left: auto;
+    margin-right: auto;
+    
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+    
   }
 `;

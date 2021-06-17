@@ -24,6 +24,7 @@ export const Container = styled.div`
       font-size: 2rem;
       font-weight: 500;
       line-height: 3rem;
+      word-break: break-all;
     }
 
     &.highlight-background {
