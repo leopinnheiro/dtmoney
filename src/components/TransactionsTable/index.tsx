@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
+import { formatCurrency, formatDate } from "../../utils/formats";
 import { Container } from "./styles";
 
 interface Transaction {
@@ -35,9 +36,9 @@ export function TransactionsTable() {
           {transactions.map(transaction => (
             <tr key={transaction.id}>
               <td>{transaction.title}</td>
-              <td className={transaction.type}>{transaction.amount}</td>
+              <td className={transaction.type}>{formatCurrency(transaction.amount)}</td>
               <td>{transaction.category}</td>
-              <td>{transaction.createdAt}</td>
+              <td>{formatDate(transaction.createdAt)}</td>
             </tr>
           ))}
         </tbody>

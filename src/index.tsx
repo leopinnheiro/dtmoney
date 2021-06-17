@@ -32,7 +32,7 @@ createServer({
           title: 'Aluguel',
           type: 'withdraw',
           category: 'Despesas fixas',
-          amount: 1200.00,
+          amount: -1200.00,
           createdAt: new Date('2021-04-05')
         },
         {
