@@ -57,7 +57,11 @@ createServer({
     this.post('/transactions', (schema, request) => {
       const data = JSON.parse(request.requestBody);
 
-      return schema.create('transaction', data);
+      return schema.create('transaction', {
+        ...data,
+        amount: data.type === 'withdraw' ? data.amount * -1 : data.amount,
+        createdAt: new Date(),
+      });
     });
   }
 })
